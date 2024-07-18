@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { AllBooks } from "./classes/get-books.js";
 import { BooksControllers } from "./classes/login-class.js";
 function main() {
     //** Login */
@@ -17,8 +18,23 @@ function main() {
         const booksControllers = new BooksControllers('http://190.147.64.47:5155/', 'api/v1/auth/login');
         let token = yield booksControllers.postLogin({ email: `${username.value}`, password: `${password.value}` });
         if (token) {
+            localStorage.setItem('token', token);
             window.location.href = 'pages/dashboard.html';
         }
     }));
+    if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token');
+        const allBooks = new AllBooks(`${token}`);
+        allBooks.getAllBooks().then((books) => {
+            console.log(books);
+            allBooks.printAllBooks(books);
+        });
+    }
+    ;
+    const closeSession = document.querySelector('.close');
+    closeSession.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = '/dist/index.html';
+    });
 }
 main();

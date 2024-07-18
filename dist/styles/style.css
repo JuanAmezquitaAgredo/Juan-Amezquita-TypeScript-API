@@ -1,4 +1,4 @@
-body {
+.body_login {
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
@@ -54,4 +54,121 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+
+/* Dashboard */
+
+/* NAV */
+
+nav {
+  background-color: #4e4e4e;
+  color: white;
+  padding: 2em 0;
+  text-align: center;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.nav-links li {
+  margin: 0 1em;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+
+/* MAIN */
+
+h1{
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#content{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card */
+.item {
+  background-color: #a5acb3;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.item h1{
+  font-size: 2rem;
+}
+
+.item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.item h2 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.item p {
+  font-size: 1rem;
+  text-align: center;
+  margin: 10px 20px;
+}
+
+.item .buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.item .buttons button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.item .buttons button:hover {
+  background-color: #45a049;
 }
