@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { DeleteBooks } from "./delete_books.js";
 export class AllBooks {
     constructor(token) {
         this.token = token;
@@ -50,6 +51,16 @@ export class AllBooks {
                 </div>
             `;
                 content.appendChild(div);
+                const deleteButton = div.querySelector('.delete');
+                const editButton = div.querySelector('.edit');
+                deleteButton.addEventListener('click', () => __awaiter(this, void 0, void 0, function* () {
+                    if (confirm('Estas seguro de eliminar este libro?')) {
+                        const deleteBooks = new DeleteBooks(this.token);
+                        yield deleteBooks.deleteBook(book.id);
+                        location.reload();
+                    }
+                    ;
+                }));
             });
         }
     }
