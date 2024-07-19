@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { CreateBooks } from "./classes/create_books.js";
 import { AllBooks } from "./classes/get-books.js";
 import { BooksControllers } from "./classes/login-class.js";
 function main() {
@@ -38,6 +39,13 @@ function main() {
         closeSession.addEventListener('click', () => {
             localStorage.removeItem('token');
             window.location.href = '/dist/index.html';
+        });
+        //** Add Book */
+        const addBook = document.querySelector('.add_book');
+        addBook.addEventListener('click', () => {
+            const token = localStorage.getItem('token');
+            const createBooks = new CreateBooks(`${token}`);
+            createBooks.takeDataBook();
         });
     }
 }

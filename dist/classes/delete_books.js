@@ -26,6 +26,9 @@ export class DeleteBooks {
             if (result.status !== 200) {
                 throw new Error("Conexion fallida");
             }
+            else {
+                alert("Libro eliminado");
+            }
         });
     }
 }

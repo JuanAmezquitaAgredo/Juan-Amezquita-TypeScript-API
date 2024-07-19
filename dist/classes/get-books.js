@@ -47,8 +47,8 @@ export class AllBooks {
                 <h2>${book.author}</h2>
                 <p>${book.description}</p>
                 <div class="buttons">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
+                    <button class="edit">Editar</button>
+                    <button class="delete">Eliminar</button>
                 </div>
                 `;
                 content.appendChild(div);
