@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { DeleteBooks } from "./delete_books.js";
+import { EditBooks } from "./edit_books.js";
 export class AllBooks {
     constructor(token) {
         this.token = token;
@@ -49,7 +50,7 @@ export class AllBooks {
                     <button class="edit">Edit</button>
                     <button class="delete">Delete</button>
                 </div>
-            `;
+                `;
                 content.appendChild(div);
                 const deleteButton = div.querySelector('.delete');
                 const editButton = div.querySelector('.edit');
@@ -61,6 +62,10 @@ export class AllBooks {
                     }
                     ;
                 }));
+                editButton.addEventListener('click', () => {
+                    const editBooks = new EditBooks(this.token, book.id, book.title, book.author, book.description, book.summary, book.publicationDate);
+                    editBooks.takeDataBook();
+                });
             });
         }
     }
