@@ -19,7 +19,7 @@ export interface Result {
     files: string[]
 }
 
-export interface IeditBooks {
+export interface IBooks {
     title?: string,
     author?: string,
     description?: string,

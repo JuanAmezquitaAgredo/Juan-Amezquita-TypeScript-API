@@ -1,6 +1,6 @@
+import { CreateBooks } from "./classes/create_books.js";
 import { AllBooks } from "./classes/get-books.js";
 import { BooksControllers } from "./classes/login-class.js";
-import { Result } from "./interfaces/IBooks.js";
 function main() {
     //** Login */
     const username = document.getElementById('username') as HTMLInputElement;
@@ -36,6 +36,17 @@ function main() {
              localStorage.removeItem('token');
              window.location.href = '/dist/index.html';
         });
+
+        //** Add Book */
+
+        const addBook = document.querySelector('.add_book') as HTMLButtonElement;
+
+        addBook.addEventListener('click', ()=>{
+            const token = localStorage.getItem('token');
+            const createBooks = new CreateBooks(`${token}`);
+            createBooks.takeDataBook();
+        });
+
     }
 }
 

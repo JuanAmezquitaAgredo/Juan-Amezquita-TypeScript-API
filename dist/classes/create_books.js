@@ -7,42 +7,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export class EditBooks {
-    constructor(token, id, title, author, description, summary, publicationDate) {
+export class CreateBooks {
+    constructor(token) {
         this.token = token;
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.summary = summary;
-        this.publicationDate = publicationDate;
     }
-    editBook(book) {
+    createBook(book) {
         return __awaiter(this, void 0, void 0, function* () {
             const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             };
             const reqOptions = {
-                method: 'PATCH',
+                method: 'POST',
                 headers: headers,
                 body: JSON.stringify(book)
             };
-            const url = `http://190.147.64.47:5155/api/v1/books/${this.id}`;
+            const url = `http://190.147.64.47:5155/api/v1/books`;
             const result = yield fetch(url, reqOptions);
-            if (result.status !== 200) {
+            if (result.status !== 201) {
                 throw new Error("Conexion fallida");
             }
-            else if (result.status === 200) {
-                alert("Libro editado");
+            else if (result.status === 201) {
+                alert("Libro creado");
+                console.log(result.status);
             }
         });
     }
     takeDataBook() {
         const dialog = document.querySelector('dialog');
         dialog.innerHTML = /*html*/ `
-            <form>
-                <h1 style="font-size: 25px">Editar Libro</h1>
+        <form>
+                <h1 style="font-size: 25px">Crear Libro</h1>
                 <label for="title" style="margin-top: 10px">Titulo:</label>
                 <input type="text" id="title" name="title" required>
                 <label for="author" style="margin-top: 10px">Autor:</label>
@@ -52,20 +47,15 @@ export class EditBooks {
                 <label for="summary" style="margin-top: 10px">Resumen:</label>
                 <input type="text" id="summary" name="summary" required>
                 <label for="publicationDate" style="margin-top: 10px">Fecha de publicación:</label>
-                <input type="text" id="publicationDate" name="publicationDate" required>
+                <input type="date" id="publicationDate" name="publicationDate" required>
                 <div class="buttons" style="margin-top: 10px; display: flex; justify-content: space-around;">
-                    <button type="submit" style="background-color: #4CAF50">Editar</button>
+                    <button type="submit" style="background-color: #4CAF50">Crear</button>
                     <button type="button" id="cancel" style="background-color: #ff0000">Cancelar</button>
                 </div>
             </form>
         `;
         dialog.showModal();
         const form = dialog.querySelector('form');
-        form.elements.namedItem('title').value = this.title;
-        form.elements.namedItem('author').value = this.author;
-        form.elements.namedItem('description').value = this.description;
-        form.elements.namedItem('summary').value = this.summary;
-        form.elements.namedItem('publicationDate').value = this.publicationDate;
         form.addEventListener('submit', (event) => __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             const title = form.elements.namedItem('title').value;
@@ -73,7 +63,6 @@ export class EditBooks {
             const description = form.elements.namedItem('description').value;
             const summary = form.elements.namedItem('summary').value;
             const publicationDate = form.elements.namedItem('publicationDate').value;
-            console.log(title, author, description, summary, publicationDate);
             const book = {
                 title: title,
                 author: author,
@@ -81,8 +70,9 @@ export class EditBooks {
                 summary: summary,
                 publicationDate: publicationDate
             };
-            yield this.editBook(book);
+            yield this.createBook(book);
             location.reload();
+            dialog.close();
         }));
         const cancel = dialog.querySelector('#cancel');
         cancel.addEventListener('click', () => {
