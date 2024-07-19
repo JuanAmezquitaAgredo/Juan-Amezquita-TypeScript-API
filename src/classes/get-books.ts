@@ -1,5 +1,6 @@
 import { IResponseBooks,Result } from "../interfaces/IBooks.js";
 import { DeleteBooks } from "./delete_books.js";
+import { EditBooks } from "./edit_books.js";
 export class AllBooks{
     constructor(private token: string){}
     async getAllBooks() {
@@ -42,20 +43,26 @@ export class AllBooks{
                     <button class="edit">Edit</button>
                     <button class="delete">Delete</button>
                 </div>
-            `;
+                `;
                 content.appendChild(div);
 
                 const deleteButton = div.querySelector('.delete') as HTMLButtonElement;
                 const editButton = div.querySelector('.edit') as HTMLButtonElement;
 
                 deleteButton.addEventListener('click', async ()=>{
-
                     if(confirm('Estas seguro de eliminar este libro?')){
                         const deleteBooks = new DeleteBooks(this.token);
                         await deleteBooks.deleteBook(book.id);
                         location.reload();
                     };
                 });
+
+                editButton.addEventListener('click', ()=>{
+                    const editBooks = new EditBooks(this.token,book.id,book.title,book.author,book.description,book.summary,book.publicationDate);
+                    editBooks.takeDataBook();
+                });
+
+        
             });
         }
     }

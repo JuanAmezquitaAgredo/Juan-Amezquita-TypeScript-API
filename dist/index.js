@@ -13,15 +13,17 @@ function main() {
     //** Login */
     const username = document.getElementById('username');
     const password = document.getElementById('password');
-    document.addEventListener('submit', (e) => __awaiter(this, void 0, void 0, function* () {
-        e.preventDefault();
-        const booksControllers = new BooksControllers('http://190.147.64.47:5155/', 'api/v1/auth/login');
-        let token = yield booksControllers.postLogin({ email: `${username.value}`, password: `${password.value}` });
-        if (token) {
-            localStorage.setItem('token', token);
-            window.location.href = 'pages/dashboard.html';
-        }
-    }));
+    if (window.location.pathname === '/dist/index.html') {
+        document.addEventListener('submit', (e) => __awaiter(this, void 0, void 0, function* () {
+            e.preventDefault();
+            const booksControllers = new BooksControllers('http://190.147.64.47:5155/', 'api/v1/auth/login');
+            let token = yield booksControllers.postLogin({ email: `${username.value}`, password: `${password.value}` });
+            if (token) {
+                localStorage.setItem('token', token);
+                window.location.href = 'pages/dashboard.html';
+            }
+        }));
+    }
     if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token');
         const allBooks = new AllBooks(`${token}`);
@@ -31,10 +33,12 @@ function main() {
         });
     }
     ;
-    const closeSession = document.querySelector('.close');
-    closeSession.addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = '/dist/index.html';
-    });
+    if (window.location.pathname === '/dist/pages/dashboard.html') {
+        const closeSession = document.querySelector('.close');
+        closeSession.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = '/dist/index.html';
+        });
+    }
 }
 main();

@@ -18,3 +18,11 @@ export interface Result {
     deletedAt: null,
     files: string[]
 }
+
+export interface IeditBooks {
+    title?: string,
+    author?: string,
+    description?: string,
+    summary?: string,
+    publicationDate?: string
+}
