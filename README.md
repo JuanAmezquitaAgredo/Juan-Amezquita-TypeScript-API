@@ -17,6 +17,8 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
    ```bash
    git clone https://github.com/JuanAmezquitaAgredo/Juan-Amezquita-TypeScript-API.git
+
+   link_video: "https://drive.google.com/file/d/1jwDix9TCM3FyJ3FnU2s6xbsfnZimz03X/view?usp=sharing"
    ```
 
 2. Navega al directorio de tu proyecto:
