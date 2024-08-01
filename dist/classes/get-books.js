@@ -54,11 +54,21 @@ export class AllBooks {
                 content.appendChild(div);
                 const deleteButton = div.querySelector('.delete');
                 const editButton = div.querySelector('.edit');
+                const spinner = document.getElementById('loading-spinner');
                 deleteButton.addEventListener('click', () => __awaiter(this, void 0, void 0, function* () {
                     if (confirm('Estas seguro de eliminar este libro?')) {
+                        spinner.showModal();
                         const deleteBooks = new DeleteBooks(this.token);
-                        yield deleteBooks.deleteBook(book.id);
-                        location.reload();
+                        try {
+                            yield deleteBooks.deleteBook(book.id);
+                            location.reload();
+                        }
+                        catch (error) {
+                            console.log(error);
+                        }
+                        finally {
+                            spinner.close();
+                        }
                     }
                     ;
                 }));

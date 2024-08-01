@@ -39,7 +39,7 @@ export class EditBooks {
         });
     }
     takeDataBook() {
-        const dialog = document.querySelector('dialog');
+        const dialog = document.querySelector('#dialog_edit');
         dialog.innerHTML = /*html*/ `
             <form>
                 <h1 style="font-size: 25px">Editar Libro</h1>
@@ -61,12 +61,14 @@ export class EditBooks {
         `;
         dialog.showModal();
         const form = dialog.querySelector('form');
+        const spinner = document.querySelector('#loading-spinner');
         form.elements.namedItem('title').value = this.title;
         form.elements.namedItem('author').value = this.author;
         form.elements.namedItem('description').value = this.description;
         form.elements.namedItem('summary').value = this.summary;
         form.elements.namedItem('publicationDate').value = this.publicationDate;
         form.addEventListener('submit', (event) => __awaiter(this, void 0, void 0, function* () {
+            spinner.showModal();
             event.preventDefault();
             const title = form.elements.namedItem('title').value;
             const author = form.elements.namedItem('author').value;
@@ -81,8 +83,17 @@ export class EditBooks {
                 summary: summary,
                 publicationDate: publicationDate
             };
-            yield this.editBook(book);
-            location.reload();
+            try {
+                yield this.editBook(book);
+                location.reload();
+            }
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+                spinner.close();
+                dialog.close();
+            }
         }));
         const cancel = dialog.querySelector('#cancel');
         cancel.addEventListener('click', () => {

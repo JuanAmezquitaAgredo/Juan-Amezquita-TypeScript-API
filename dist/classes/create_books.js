@@ -34,7 +34,7 @@ export class CreateBooks {
         });
     }
     takeDataBook() {
-        const dialog = document.querySelector('dialog');
+        const dialog = document.querySelector('#dialog_add');
         dialog.innerHTML = /*html*/ `
         <form>
                 <h1 style="font-size: 25px">Crear Libro</h1>
@@ -56,8 +56,10 @@ export class CreateBooks {
         `;
         dialog.showModal();
         const form = dialog.querySelector('form');
+        const spinner = document.querySelector('#loading-spinner');
         form.addEventListener('submit', (event) => __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
+            spinner.showModal();
             const title = form.elements.namedItem('title').value;
             const author = form.elements.namedItem('author').value;
             const description = form.elements.namedItem('description').value;
@@ -70,9 +72,17 @@ export class CreateBooks {
                 summary: summary,
                 publicationDate: publicationDate
             };
-            yield this.createBook(book);
-            location.reload();
-            dialog.close();
+            try {
+                yield this.createBook(book);
+                location.reload();
+            }
+            catch (error) {
+                console.error('Error creating book:', error);
+            }
+            finally {
+                spinner.close();
+                dialog.close();
+            }
         }));
         const cancel = dialog.querySelector('#cancel');
         cancel.addEventListener('click', () => {

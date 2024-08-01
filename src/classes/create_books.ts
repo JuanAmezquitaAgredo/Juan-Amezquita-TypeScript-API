@@ -28,7 +28,7 @@ export class CreateBooks {
     }
 
     takeDataBook(){
-        const dialog = document.querySelector('dialog') as HTMLDialogElement;
+        const dialog = document.querySelector('#dialog_add') as HTMLDialogElement;
         dialog.innerHTML = /*html*/ `
         <form>
                 <h1 style="font-size: 25px">Crear Libro</h1>
@@ -50,9 +50,12 @@ export class CreateBooks {
         `;
         dialog.showModal();
         const form = dialog.querySelector('form') as HTMLFormElement;
+        const spinner = document.querySelector('#loading-spinner') as HTMLDialogElement;
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
+            spinner.showModal();
+
             const title = (form.elements.namedItem('title') as HTMLInputElement).value
             const author = (form.elements.namedItem('author') as HTMLInputElement).value
             const description = (form.elements.namedItem('description') as HTMLInputElement).value
@@ -65,9 +68,15 @@ export class CreateBooks {
                 summary: summary,
                 publicationDate: publicationDate
             }
-            await this.createBook(book);
-            location.reload();
-            dialog.close();
+            try {
+                await this.createBook(book);
+                location.reload();
+            } catch (error) {
+                console.error('Error creating book:', error);
+            } finally {
+                spinner.close();
+                dialog.close();
+            }
         });
 
         const cancel = dialog.querySelector('#cancel') as HTMLButtonElement;

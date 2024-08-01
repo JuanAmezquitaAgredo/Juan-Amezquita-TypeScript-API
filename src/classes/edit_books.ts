@@ -26,7 +26,7 @@ export class EditBooks{
     }
 
     takeDataBook(){
-        const dialog = document.querySelector('dialog') as HTMLDialogElement;
+        const dialog = document.querySelector('#dialog_edit') as HTMLDialogElement;
         dialog.innerHTML = /*html*/ `
             <form>
                 <h1 style="font-size: 25px">Editar Libro</h1>
@@ -48,6 +48,7 @@ export class EditBooks{
         `;
         dialog.showModal();
         const form = dialog.querySelector('form') as HTMLFormElement;
+        const spinner = document.querySelector('#loading-spinner') as HTMLDialogElement;
 
         (form.elements.namedItem('title') as HTMLInputElement).value = this.title;
         (form.elements.namedItem('author') as HTMLInputElement).value = this.author;
@@ -56,6 +57,7 @@ export class EditBooks{
         (form.elements.namedItem('publicationDate') as HTMLInputElement).value = this.publicationDate;
 
         form.addEventListener('submit', async (event) => {
+            spinner.showModal();
             event.preventDefault();
             const title = (form.elements.namedItem('title') as HTMLInputElement).value
             const author = (form.elements.namedItem('author') as HTMLInputElement).value
@@ -70,8 +72,15 @@ export class EditBooks{
                 summary: summary,
                 publicationDate: publicationDate
             }
-            await this.editBook(book);
-            location.reload();
+            try {
+                await this.editBook(book);
+                location.reload();
+            } catch (error) {
+                console.log(error);
+            } finally {
+                spinner.close();
+                dialog.close();
+            }
         });
 
         const cancel = dialog.querySelector('#cancel') as HTMLButtonElement;
